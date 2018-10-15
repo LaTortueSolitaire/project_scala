@@ -1,0 +1,79 @@
+[0m[[0m[0minfo[0m] [0m[0m[32mAccountTransferTests:[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m- Test 08: Valid transfer between accounts *** FAILED ***[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  scala.NotImplementedError: an implementation is missing[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at scala.Predef$.$qmark$qmark$qmark(Predef.scala:284)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at TransactionQueue.push(Transaction.scala:17)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at Bank.addTransactionToQueue(Bank.scala:12)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at Account.transferTo(Account.scala:22)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at AccountTransferTests.$anonfun$new$22(AccountTests.scala:92)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.OutcomeOf.outcomeOf(OutcomeOf.scala:85)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.OutcomeOf.outcomeOf$(OutcomeOf.scala:83)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.OutcomeOf$.outcomeOf(OutcomeOf.scala:104)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.Transformer.apply(Transformer.scala:22)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.Transformer.apply(Transformer.scala:20)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  ...[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m- Test 09: Transfer of negative amount between accounts should fail *** FAILED ***[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  scala.NotImplementedError: an implementation is missing[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at scala.Predef$.$qmark$qmark$qmark(Predef.scala:284)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at TransactionQueue.push(Transaction.scala:17)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at Bank.addTransactionToQueue(Bank.scala:12)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at Account.transferTo(Account.scala:22)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at AccountTransferTests.$anonfun$new$23(AccountTests.scala:108)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.OutcomeOf.outcomeOf(OutcomeOf.scala:85)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.OutcomeOf.outcomeOf$(OutcomeOf.scala:83)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.OutcomeOf$.outcomeOf(OutcomeOf.scala:104)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.Transformer.apply(Transformer.scala:22)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.Transformer.apply(Transformer.scala:20)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  ...[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m- Test 10: Invalid transfer between accounts due to insufficient funds should lead to transaction status FAILED and no money should be transferred between accounts *** FAILED ***[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  scala.NotImplementedError: an implementation is missing[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at scala.Predef$.$qmark$qmark$qmark(Predef.scala:284)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at TransactionQueue.push(Transaction.scala:17)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at Bank.addTransactionToQueue(Bank.scala:12)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at Account.transferTo(Account.scala:22)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at AccountTransferTests.$anonfun$new$24(AccountTests.scala:124)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.OutcomeOf.outcomeOf(OutcomeOf.scala:85)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.OutcomeOf.outcomeOf$(OutcomeOf.scala:83)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.OutcomeOf$.outcomeOf(OutcomeOf.scala:104)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.Transformer.apply(Transformer.scala:22)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.Transformer.apply(Transformer.scala:20)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  ...[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m- Test 11: Correct balance amounts after several transfers *** FAILED ***[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  scala.NotImplementedError: an implementation is missing[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at scala.Predef$.$qmark$qmark$qmark(Predef.scala:284)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at TransactionQueue.iterator(Transaction.scala:23)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at Bank.getProcessedTransactionsAsList(Bank.scala:27)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at AccountTransferTests.$anonfun$new$25(AccountTests.scala:154)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.OutcomeOf.outcomeOf(OutcomeOf.scala:85)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.OutcomeOf.outcomeOf$(OutcomeOf.scala:83)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.OutcomeOf$.outcomeOf(OutcomeOf.scala:104)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.Transformer.apply(Transformer.scala:22)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.Transformer.apply(Transformer.scala:20)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.FunSuiteLike$$anon$1.apply(FunSuiteLike.scala:186)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  ...[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m- Test 12: Failed transactions should retry and potentially succeed with multiple allowed attempts *** FAILED ***[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  scala.NotImplementedError: an implementation is missing[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at scala.Predef$.$qmark$qmark$qmark(Predef.scala:284)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at TransactionQueue.push(Transaction.scala:17)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at Bank.addTransactionToQueue(Bank.scala:12)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at Account.transferTo(Account.scala:22)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at AccountTransferTests.$anonfun$new$32(AccountTests.scala:171)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at scala.collection.immutable.Range.foreach$mVc$sp(Range.scala:156)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at AccountTransferTests.$anonfun$new$31(AccountTests.scala:171)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at scala.collection.immutable.Range.foreach$mVc$sp(Range.scala:156)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at AccountTransferTests.$anonfun$new$30(AccountTests.scala:164)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.OutcomeOf.outcomeOf(OutcomeOf.scala:85)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  ...[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m- Test 13: Some transactions should be stopped with only one allowed attempt *** FAILED ***[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  scala.NotImplementedError: an implementation is missing[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at scala.Predef$.$qmark$qmark$qmark(Predef.scala:284)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at TransactionQueue.push(Transaction.scala:17)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at Bank.addTransactionToQueue(Bank.scala:12)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at Account.transferTo(Account.scala:22)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at AccountTransferTests.$anonfun$new$36(AccountTests.scala:195)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at scala.collection.immutable.Range.foreach$mVc$sp(Range.scala:156)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at AccountTransferTests.$anonfun$new$35(AccountTests.scala:195)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at scala.collection.immutable.Range.foreach$mVc$sp(Range.scala:156)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at AccountTransferTests.$anonfun$new$34(AccountTests.scala:188)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.OutcomeOf.outcomeOf(OutcomeOf.scala:85)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  ...[0m[0m
