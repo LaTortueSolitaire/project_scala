@@ -2,7 +2,7 @@ import scala.concurrent.forkjoin.ForkJoinPool
 
 class Bank(val allowedAttempts: Integer = 3) {
 
-    private val uid = new { 
+    private val uid = new {
       var latestId = 0
     }
     private val transactionsQueue: TransactionQueue = new TransactionQueue()
@@ -10,8 +10,7 @@ class Bank(val allowedAttempts: Integer = 3) {
     //private val executorContext = ???
 
     def addTransactionToQueue(from: Account, to: Account, amount: Double): Unit = {
-      transactionsQueue push new Transaction(
-        transactionsQueue, processedTransactions, from, to, amount, allowedAttempts)
+      transactionsQueue.push(new Transaction(transactionsQueue, processedTransactions, from, to, amount, allowedAttempts))
     }
 
     // Hint: use a counter
