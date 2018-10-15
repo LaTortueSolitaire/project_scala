@@ -7,10 +7,11 @@ class Bank(val allowedAttempts: Integer = 3) {
     }
     private val transactionsQueue: TransactionQueue = new TransactionQueue()
     private val processedTransactions: TransactionQueue = new TransactionQueue()
-    private val executorContext = "somethin"
+    //private val executorContext = "somethin"
 
     def addTransactionToQueue(from: Account, to: Account, amount: Double): Unit = {
       transactionsQueue.push(new Transaction(transactionsQueue, processedTransactions, from, to, amount, allowedAttempts))
+      processTransactions
     }
 
     // Hint: use a counter
@@ -28,9 +29,11 @@ class Bank(val allowedAttempts: Integer = 3) {
       //}
       while ( ! this.transactionsQueue.isEmpty )  {
         val transaction : Transaction = this.transactionsQueue.pop
-        val thread : Thread = new Thread( transaction )
+        //val thread : Thread = new Thread( transaction )
+        //thread.start
+        var attempt : Int = 
+        transaction.run
         this.processedTransactions.push( transaction )
-        thread.start()
       }
     }
 

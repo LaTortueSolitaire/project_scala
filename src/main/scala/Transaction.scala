@@ -45,10 +45,16 @@ class Transaction(val transactionsQueue: TransactionQueue,
   var status: TransactionStatus.Value = TransactionStatus.PENDING
 
   override def run: Unit = {
+      var attempts : Int = 0
 
       def doTransaction() = {
+        try {
           from withdraw amount
           to deposit amount
+          this.status = TransactionStatus.SUCCESS
+        } catch {
+          case _ => checkAttempts 
+        }
       }
 
       if (from.uid < to.uid) from synchronized {
@@ -61,7 +67,21 @@ class Transaction(val transactionsQueue: TransactionQueue,
           }
       }
 
-      // Extend this method to satisfy requirements.
-
+      def checkAttempts : Unit = {
+        attempts += 1
+        if( attempts > this.allowedAttemps )  {
+          this.status = TransactionStatus.FAILED
+        } else  {
+              if (from.uid < to.uid) from synchronized {
+              to synchronized {
+                doTransaction
+              }
+              } else to synchronized {
+              from synchronized {
+                doTransaction
+              }
+          }
+            }
+          }
     }
 }
