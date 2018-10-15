@@ -2,8 +2,8 @@ import scala.concurrent.forkjoin.ForkJoinPool
 
 class Bank(val allowedAttempts: Integer = 3) {
 
-    private val uid = Uid { latestId: Int
-
+    private val uid = new { 
+      var latestId = 0
     }
     private val transactionsQueue: TransactionQueue = new TransactionQueue()
     private val processedTransactions: TransactionQueue = new TransactionQueue()
@@ -15,8 +15,9 @@ class Bank(val allowedAttempts: Integer = 3) {
     }
 
     // Hint: use a counter
-    def generateAccountId: Int = {
-      1
+    def generateAccountId: Int = synchronized {
+      uid.latestId += 1
+      uid.latestId
     }
 
     //private def processTransactions: Unit = ???
