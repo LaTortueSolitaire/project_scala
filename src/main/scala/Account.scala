@@ -10,12 +10,12 @@ class Account(val bank: Bank, initialBalance: Double) {
     def withdraw(amount: Double): Unit = amount match {
       case amount if amount <= 0 => throw new IllegalAmountException("Amount must be larger than zero.")
       case amount if getBalanceAmount < amount => throw new NoSufficientFundsException("Not enough funds available.")
-      case _ => this.balance.amount = this.balance.amount - amount
+      case _ => synchronized { this.balance.amount = getBalanceAmount - amount }
     }
 
     def deposit(amount: Double): Unit = amount match {
       case amount if amount <= 0 => throw new IllegalAmountException("Amount must be larger than zero.")
-      case _ => this.balance.amount = this.balance.amount + amount
+      case _ => synchronized { this.balance.amount = getBalanceAmount + amount }
     }
 
     def getBalanceAmount: Double = synchronized { this.balance.amount }
