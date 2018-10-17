@@ -20,7 +20,7 @@ class Bank(val allowedAttempts: Integer = 3) {
       uid.latestId
     }
 
-    private def processTransactions: Unit = { 
+    private def processTransactions: Unit = {
       //while ( !this.transactionsQueue.isEmpty ) {
       //  var trans : Transaction = this.transactionsQueue.pop
       //  this.processedTransactions.push( trans )
@@ -31,7 +31,7 @@ class Bank(val allowedAttempts: Integer = 3) {
         val transaction : Transaction = this.transactionsQueue.pop
         //val thread : Thread = new Thread( transaction )
         //thread.start
-        var attempt : Int = 
+        // var attempt : Int =
         transaction.run
         this.processedTransactions.push( transaction )
       }
