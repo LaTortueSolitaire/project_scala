@@ -24,21 +24,32 @@ class Account(val accountId: String, val bankId: String, val initialBalance: Dou
 
     def getTransactions: List[Transaction] = {
         // Should return a list of all Transaction-objects stored in transactions
-        ???
+        var trans : List = new List()
+        for ( ( k, t ) <- this.transactions t :: trans  ) ) 
     }
 
     def allTransactionsCompleted: Boolean = {
         // Should return whether all Transaction-objects in transactions are completed
-        ???
+        for ( ( k, t ) <- this.transactions if( !t.isCompleted ) { false } )
+        true
     }
 
-    def withdraw(amount: Double): Unit = ??? // Like in part 2
-    def deposit(amount: Double): Unit = ??? // Like in part 2
-    def getBalanceAmount: Double = ??? // Like in part 2
+    def withdraw(amount: Double): Unit = amount match {
+      case amount if amount <= 0 => throw new IllegalAmountException("Amount must be larger than zero.")
+      case amount if getBalanceAmount < amount => throw new NoSufficientFundsException("Not enough funds available.")
+      case _ => synchronized { this.balance.amount = getBalanceAmount - amount }
+    }
+
+    def deposit(amount: Double): Unit = amount match {
+      case amount if amount <= 0 => throw new IllegalAmountException("Amount must be larger than zero.")
+      case _ => synchronized { this.balance.amount = getBalanceAmount + amount }
+    }
+
+    def getBalanceAmount: Double = synchronized { this.balance.amount }
 
     def sendTransactionToBank(t: Transaction): Unit = {
         // Should send a message containing t to the bank of this account
-        ???
+        BankManager.findBank( this.bankId ) ! t
     }
 
     def transferTo(accountNumber: String, amount: Double): Transaction = {
@@ -73,7 +84,7 @@ class Account(val accountId: String, val bankId: String, val initialBalance: Dou
 
 		case TransactionRequestReceipt(to, transactionId, transaction) => {
 			// Process receipt
-			???
+            ???
 		}
 
 		case BalanceRequest => ??? // Should return current balance
