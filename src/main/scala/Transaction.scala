@@ -48,40 +48,27 @@ class Transaction(val transactionsQueue: TransactionQueue,
       var attempts : Int = 0
 
       def doTransaction() = {
+        attempts += 1
         try {
           from withdraw amount
           to deposit amount
           this.status = TransactionStatus.SUCCESS
         } catch {
-          case _ => checkAttempts 
+          case _ => this.status = TransactionStatus.FAILED
         }
       }
-
-      if (from.uid < to.uid) from synchronized {
-          to synchronized {
-            doTransaction
-          }
-      } else to synchronized {
-          from synchronized {
-            doTransaction
-          }
-      }
-
-      def checkAttempts : Unit = {
-        attempts += 1
-        if( attempts > this.allowedAttemps )  {
-          this.status = TransactionStatus.FAILED
-        } else  {
-              if (from.uid < to.uid) from synchronized {
+      
+      while ( attempts <= this.allowedAttemps && this.status != TransactionStatus.SUCCESS ) {
+          if (from.uid < to.uid) from synchronized {
               to synchronized {
                 doTransaction
               }
-              } else to synchronized {
+          } else to synchronized {
               from synchronized {
                 doTransaction
               }
           }
-            }
-          }
+      }
+      
     }
 }
