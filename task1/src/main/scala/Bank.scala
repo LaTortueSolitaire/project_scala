@@ -33,9 +33,6 @@ class Bank(val allowedAttempts: Integer = 3) {
 
         if( transaction.status == TransactionStatus.FAILED && transaction.attempts<allowedAttempts-1){
           this.processedTransactions.pop
-          println("putting to sleep")
-          Thread.sleep(50)
-          println("finish sleeping")
           transactionsQueue.push(transaction)
         }
       }

@@ -49,7 +49,7 @@ class Transaction(val transactionsQueue: TransactionQueue,
 
       def doTransaction() = {
         try {
-          println("j'essaye "+from.getBalanceAmount+" vers "+to.getBalanceAmount+" de "+amount)
+          // println("j'essaye "+from.getBalanceAmount+" vers "+to.getBalanceAmount+" de "+amount)
           from withdraw amount
           to deposit amount
           this.status = TransactionStatus.SUCCESS
