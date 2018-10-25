@@ -38,7 +38,11 @@ class Bank(val bankId: String) extends Actor {
 
         case t: TransactionRequestReceipt => {
         // Forward receipt
-          (BankManager findAccount ( t.toAccountNumber.substring(0,4), t.toAccountNumber.substring(4) ) ) ! t
+        try {
+          (BankManager findBank ( t.toAccountNumber.substring(0,4) ) ) ! t
+        } catch {
+          case _ => println(s"account does not exist")
+        }
         }
 
         case msg => println ( s"I did not understand the request: '$msg'" )
@@ -54,9 +58,17 @@ class Bank(val bankId: String) extends Actor {
         // This method should forward Transaction t to an account or another bank, depending on the "to"-address.
         // HINT: Make use of the variables that have been defined above.
         if( isInternal )  {
+          try{
           (BankManager findAccount( bankId, toAccountId ) ) ! t
+          } catch {
+            case _=> println(s"account does not exist" )
+          }
         } else  {
+          try {
           (BankManager findAccount( toBankId, toAccountId ) ) ! t
+          } catch {
+            case _=> println( s"This account does not exist" )
+          }
         }
     }
 }
