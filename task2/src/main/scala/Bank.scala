@@ -61,13 +61,19 @@ class Bank(val bankId: String) extends Actor {
           try{
           (BankManager findAccount( bankId, toAccountId ) ) ! t
           } catch {
-            case _=> println(s"account does not exist" )
+            case _=> {
+              t.status = TransactionStatus.FAILED
+              sender ! (new TransactionRequestReceipt( t.to, t.id, t ) )
+            }
           }
         } else  {
           try {
           (BankManager findAccount( toBankId, toAccountId ) ) ! t
           } catch {
-            case _=> println( s"This account does not exist" )
+            case _ => {
+              t.status = TransactionStatus.FAILED
+              sender ! ( new TransactionRequestReceipt( t.to, t.id, t ) )
+            }
           }
         }
     }
