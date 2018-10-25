@@ -18,18 +18,18 @@ class Bank(val bankId: String) extends Actor {
     def createAccount(initialBalance: Double): ActorRef = {
         // Should create a new Account Actor and return its actor reference. Accounts should be assigned with unique ids (increment with 1).
         BankManager createAccount( accountCounter toString, bankId, initialBalance )
-        accountCounter += 1
-        BankManager findAccount( bankId, ( accountCounter - 1 ) toString )
+        accountCounter.set( accountCounter.get + 1 )
+        BankManager findAccount( bankId, ( accountCounter decrementAndGet ) toString )
     }
 
     def findAccount(accountId: String): Option[ActorRef] = {
         // Use BankManager to look up an account with ID accountId
-        BankManager findAccount( bankId,  accountId )
+        Some( BankManager findAccount( bankId,  accountId ) )
     }
 
     def findOtherBank(bankId: String): Option[ActorRef] = {
         // Use BankManager to look up a different bank with ID bankId
-        BankManager findBank( bankId )
+        Some( BankManager findBank ( bankId ) )
     }
 
     override def receive = {
@@ -40,10 +40,10 @@ class Bank(val bankId: String) extends Actor {
 
         case t: TransactionRequestReceipt => {
         // Forward receipt
-          BankManager findAccount( bankId, t toAccountNumber ) ! t
+          ( BankManager findAccount( bankId, t toAccountNumber ) ) ! t
         }
 
-        case msg => log.info( s"I did not understand the request: '$msg'" )
+        case msg => println ( s"I did not understand the request: '$msg'" )
     }
 
     def processTransaction(t: Transaction): Unit = {
@@ -55,6 +55,6 @@ class Bank(val bankId: String) extends Actor {
         
         // This method should forward Transaction t to an account or another bank, depending on the "to"-address.
         // HINT: Make use of the variables that have been defined above.
-        BankMananger findAccount ( toBankId, toAccountId ) ! t
+        ( BankManager findAccount ( toBankId, toAccountId ) ) ! t
     }
 }

@@ -24,13 +24,12 @@ class Account(val accountId: String, val bankId: String, val initialBalance: Dou
 
     def getTransactions: List[Transaction] = {
         // Should return a list of all Transaction-objects stored in transactions
-        var trans : List = new List()
-        for ( some <- this.transactions t :: trans  ) { some : trans }
+        transactions.valuesIterator.toList
     }
 
     def allTransactionsCompleted: Boolean = {
         // Should return whether all Transaction-objects in transactions are completed
-        for ( ( k, t ) <- this.transactions if( !t.isCompleted ) { false } )
+        transactions foreach { case ( k, t ) => if (!t.isCompleted ) { return false } } 
         true
     }
 
@@ -49,7 +48,7 @@ class Account(val accountId: String, val bankId: String, val initialBalance: Dou
 
     def sendTransactionToBank(t: Transaction): Unit = {
         // Should send a message containing t to the bank of this account
-        BankManager.findBank( this.bankId ) ! t
+        ( BankManager.findBank( this.bankId ) ) ! t
     }
 
     def transferTo(accountNumber: String, amount: Double): Transaction = {
@@ -95,13 +94,13 @@ class Account(val accountId: String, val bankId: String, val initialBalance: Dou
             try {
               withdraw( t.amount )
               t.status = TransactionStatus.SUCCESS
-              BankManager findAccount ( t toAccountNumber substring( 0, 4 ), t toAccountNumber substring( 4 ) )
+              BankManager findAccount ( t.to.substring( 0, 4 ), t.to.substring( 4 ) )
             } catch {
-              case _ => log.info( s"Something went wrong while handling the transaction" )
+              case _ => println ( s"Something went wrong while handling the transaction" )
             }
 		}
 
-		case msg => log.info( s"I did not understand the request: '$msg'" )
+		case msg => println ( s"I did not understand the request: '$msg'" )
     }
 
 
