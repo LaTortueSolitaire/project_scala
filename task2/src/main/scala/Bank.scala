@@ -38,10 +38,7 @@ class Bank(val bankId: String) extends Actor {
 
         case t: TransactionRequestReceipt => {
         // Forward receipt
-        val account = findAccount( t.toAccountNumber )
-        account match {
-          case Some( a ) => a ! t
-        }
+          (BankManager findAccount ( t.toAccountNumber.substring(0,4), t.toAccountNumber.substring(4) ) ) ! t
         }
 
         case msg => println ( s"I did not understand the request: '$msg'" )
@@ -56,9 +53,10 @@ class Bank(val bankId: String) extends Actor {
         
         // This method should forward Transaction t to an account or another bank, depending on the "to"-address.
         // HINT: Make use of the variables that have been defined above.
-        val account = findAccount ( toAccountId )
-        account match {
-          case Some( a ) => a ! t
+        if( isInternal )  {
+          (BankManager findAccount( bankId, toAccountId ) ) ! t
+        } else  {
+          (BankManager findAccount( toBankId, toAccountId ) ) ! t
         }
     }
 }
