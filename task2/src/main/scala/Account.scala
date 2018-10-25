@@ -83,20 +83,26 @@ class Account(val accountId: String, val bankId: String, val initialBalance: Dou
 
 		case TransactionRequestReceipt(to, transactionId, transaction) => {
 			// Process receipt
-            transactions( transactionId ) status = TransactionStatus.SUCCESS
+            if(transaction.status == TransactionStatus.FAILED)  {
+              deposit( transaction.amount )
+            }
+            transactions( transactionId ) status = transaction.status
             transactions( transactionId ) receiptReceived = true
 		}
 
-		case BalanceRequest => getBalanceAmount // Should return current balance
+		case BalanceRequest => sender ! getBalanceAmount // Should return current balance
 
 		case t: Transaction => {
 			// Handle incoming transaction
             try {
-              withdraw( t.amount )
+              deposit( t.amount )
               t.status = TransactionStatus.SUCCESS
-              BankManager findAccount ( t.to.substring( 0, 4 ), t.to.substring( 4 ) )
+              sender ! ( new TransactionRequestReceipt( t.to, t.id, t ) )
             } catch {
-              case _ => println ( s"Something went wrong while handling the transaction" )
+              case _ => {
+                t.status = TransactionStatus.FAILED
+                sender ! ( new TransactionRequestReceipt( t.to, t.id, t ) )
+              }
             }
 		}
 

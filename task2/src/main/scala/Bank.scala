@@ -16,7 +16,7 @@ class Bank(val bankId: String) extends Actor {
     val accountCounter = new AtomicInteger(1000)
 
     def createAccount(initialBalance: Double): ActorRef = {
-        // Should create a new Account Actor and return its actor reference. Accounts should be assigned with unique ids (increment with 1).
+        // Should create a new Account Actor and return its actoir reference. Accounts should be assigned with unique ids (increment with 1).
         BankManager.createAccount( accountCounter.incrementAndGet.toString , bankId, initialBalance )
     }
 
@@ -31,14 +31,17 @@ class Bank(val bankId: String) extends Actor {
     }
 
     override def receive = {
-        case CreateAccountRequest(initialBalance) => createAccount( initialBalance ) // Create a new account
-        case GetAccountRequest(id) => BankManager findAccount ( bankId, id ) // Return account
+        case CreateAccountRequest(initialBalance) => sender ! createAccount( initialBalance ) // Create a new account
+        case GetAccountRequest(id) =>sender ! findAccount( id ) // Return account
         case IdentifyActor => sender ! this
         case t: Transaction => processTransaction(t)
 
         case t: TransactionRequestReceipt => {
         // Forward receipt
-          ( BankManager findAccount( bankId, t toAccountNumber ) ) ! t
+        val account = findAccount( t.toAccountNumber )
+        account match {
+          case Some( a ) => a ! t
+        }
         }
 
         case msg => println ( s"I did not understand the request: '$msg'" )
@@ -53,6 +56,9 @@ class Bank(val bankId: String) extends Actor {
         
         // This method should forward Transaction t to an account or another bank, depending on the "to"-address.
         // HINT: Make use of the variables that have been defined above.
-        ( BankManager findAccount ( toBankId, toAccountId ) ) ! t
+        val account = findAccount ( toAccountId )
+        account match {
+          case Some( a ) => a ! t
+        }
     }
 }
