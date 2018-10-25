@@ -25,7 +25,7 @@ class Account(val accountId: String, val bankId: String, val initialBalance: Dou
     def getTransactions: List[Transaction] = {
         // Should return a list of all Transaction-objects stored in transactions
         var trans : List = new List()
-        for ( ( k, t ) <- this.transactions t :: trans  ) ) 
+        for ( some <- this.transactions t :: trans  ) { some : trans }
     }
 
     def allTransactionsCompleted: Boolean = {
@@ -37,15 +37,15 @@ class Account(val accountId: String, val bankId: String, val initialBalance: Dou
     def withdraw(amount: Double): Unit = amount match {
       case amount if amount <= 0 => throw new IllegalAmountException("Amount must be larger than zero.")
       case amount if getBalanceAmount < amount => throw new NoSufficientFundsException("Not enough funds available.")
-      case _ => synchronized { this.balance.amount = getBalanceAmount - amount }
+      case _ =>  this.balance.amount = getBalanceAmount - amount
     }
 
     def deposit(amount: Double): Unit = amount match {
       case amount if amount <= 0 => throw new IllegalAmountException("Amount must be larger than zero.")
-      case _ => synchronized { this.balance.amount = getBalanceAmount + amount }
+      case _ => this.balance.amount = getBalanceAmount + amount 
     }
 
-    def getBalanceAmount: Double = synchronized { this.balance.amount }
+    def getBalanceAmount: Double = this.balance.amount
 
     def sendTransactionToBank(t: Transaction): Unit = {
         // Should send a message containing t to the bank of this account
@@ -84,17 +84,24 @@ class Account(val accountId: String, val bankId: String, val initialBalance: Dou
 
 		case TransactionRequestReceipt(to, transactionId, transaction) => {
 			// Process receipt
-            ???
+            transactions( transactionId ) status = TransactionStatus.SUCCESS
+            transactions( transactionId ) receiptReceived = true
 		}
 
-		case BalanceRequest => ??? // Should return current balance
+		case BalanceRequest => getBalanceAmount // Should return current balance
 
 		case t: Transaction => {
 			// Handle incoming transaction
-			???
+            try {
+              withdraw( t.amount )
+              t.status = TransactionStatus.SUCCESS
+              BankManager findAccount ( t toAccountNumber substring( 0, 4 ), t toAccountNumber substring( 4 ) )
+            } catch {
+              case _ => log.info( s"Something went wrong while handling the transaction" )
+            }
 		}
 
-		case msg => ???
+		case msg => log.info( s"I did not understand the request: '$msg'" )
     }
 
 
